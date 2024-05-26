@@ -45,12 +45,20 @@ def callback():
 
 @handler.add(MessageEvent, message=TextMessageContent)
 def handle_message(event):
+    msg = event.message.text
+    r = '很抱歉，您說什麼'
+
+    if msg == 'hi':
+        r = 'hi'
+    elif msg == '你吃飯了嗎':
+        r = "還沒"
+
     with ApiClient(configuration) as api_client:
         line_bot_api = MessagingApi(api_client)
         line_bot_api.reply_message_with_http_info(
             ReplyMessageRequest(
                 reply_token=event.reply_token,
-                messages=[TextMessage(text=event.message.text)]
+                messages=[TextMessage(text=r)]
             )
         )
 
